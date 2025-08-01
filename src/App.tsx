@@ -684,7 +684,7 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                         <Input 
                             value={newMemberName} 
                             onChange={(e) => setNewMemberName(e.target.value)} 
-                            placeholder="New member name (e.g., John)" 
+                            placeholder="New member name (e.g., Arun)" 
                         />
                     </div>
                     <Button onClick={handleAddMember} className="w-full sm:w-auto sm:px-8 sm:h-full">
@@ -894,28 +894,14 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                     transition={{ delay: 0.3, duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
                 >
                     <Card>
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
-                            <div className="flex items-center gap-3 sm:gap-4">
-                                <div className="p-2 sm:p-3 bg-white/5 rounded-xl border border-white/10">
-                                    <Calculator size={24} className="sm:w-7 sm:h-7 text-white/70" />
-                                </div>
-                                <h2 className="text-2xl sm:text-3xl text-white font-medium">Expense Log</h2>
-                                <div className="text-white/50 bg-white/5 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-                                    {expenses.length}
-                                </div>
+                        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                            <div className="p-2 sm:p-3 bg-white/5 rounded-xl border border-white/10">
+                                <Calculator size={24} className="sm:w-7 sm:h-7 text-white/70" />
                             </div>
-                            {expenses.length > 0 && (
-                                <motion.button 
-                                    onClick={() => setIsResetModalOpen(true)} 
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="flex items-center gap-2 sm:gap-3 text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-300 text-sm sm:text-base self-start sm:self-auto flex-shrink-0 min-w-fit whitespace-nowrap"
-                                >
-                                    <RefreshCw size={14} className="sm:w-4 sm:h-4" />
-                                    <span className="hidden sm:inline">Reset All</span>
-                                    <span className="sm:hidden">Reset</span>
-                                </motion.button>
-                            )}
+                            <h2 className="text-2xl sm:text-3xl text-white font-medium">Expense Log</h2>
+                            <div className="text-white/50 bg-white/5 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+                                {expenses.length}
+                            </div>
                         </div>
 
                         <div className="space-y-3 sm:space-y-4">
@@ -983,6 +969,27 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                                 })}
                             </AnimatePresence>
                         </div>
+
+                        {/* Reset Button Moved to Bottom */}
+                        {expenses.length > 0 && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2, duration: 0.5 }}
+                                className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10 flex justify-center"
+                            >
+                                <motion.button 
+                                    onClick={() => setIsResetModalOpen(true)} 
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="flex items-center gap-2 sm:gap-3 text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-4 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 text-sm sm:text-base flex-shrink-0 min-w-fit whitespace-nowrap"
+                                >
+                                    <RefreshCw size={16} className="sm:w-5 sm:h-5" />
+                                    <span className="hidden sm:inline">Reset All Expenses</span>
+                                    <span className="sm:hidden">Reset All</span>
+                                </motion.button>
+                            </motion.div>
+                        )}
                     </Card>
                 </motion.div>
             )}
