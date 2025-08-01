@@ -21,19 +21,17 @@ As a final semester BCA student, I'm passionate about building practical tools t
 
 * **Group Management:** Create and manage multiple expense groups (e.g., "Goa Trip," "Roommates").
 * **Member Management:** Easily add or remove members within each group.
-* **Detailed Expense Tracking:** Log expenses with descriptions, amounts, and the person who paid.
+* **Advanced Expense Tracking:** Log expenses with descriptions and amounts.
+* **Multi-Payer System:** Allows a single bill to be paid by multiple people, each contributing a specific amount.
 * **Advanced Splitting Logic:**
     * **Split Equally:** Divide costs evenly among selected participants.
     * **Split by Amount:** Assign exact, uneven amounts to each participant for complex bills.
 * **Automated Calculations:** The app instantly calculates who owes whom, providing a clear summary of all balances.
 * **Simple Settlements:** Generates a clear, scannable list of transactions required to settle all debts.
 * **Data Visualization:** A dynamic pie chart provides a visual summary of expenses.
-* **Responsive Design:** A fluid and fully responsive layout for a seamless experience on desktops, tablets, and mobile devices.
-* **Persistent State:** All groups, members, and expenses are saved to the browser's local storage, so your data is always there when you return.
-* **Premium UI/UX:**
-    * A sleek, "glassfrost" design.
-    * Custom-built, premium alert and confirmation modals.
-    * Fluid animations and transitions powered by Framer Motion.
+* **Responsive Design:** A fluid and fully responsive layout for a seamless experience on all devices.
+* **Persistent State:** All data is saved to the browser's local storage.
+* **Premium UI/UX:** A sleek, "glassfrost" design with custom modals and fluid animations powered by Framer Motion.
 
 
 ## 🛠️ Technologies Used
