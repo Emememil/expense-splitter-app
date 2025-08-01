@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Plus, Receipt, Calculator, RefreshCw, ArrowRight, X, Copy, ArrowLeft, Users, FolderPlus, ChevronDown, Check, Trash2 } from 'lucide-react';
+import { User, Plus, Receipt, Calculator, RefreshCw, ArrowRight, X, Copy, ArrowLeft, Users, FolderPlus, ChevronDown, Check } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 // =====================================================================
@@ -947,7 +947,7 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                                                         whileTap={{ scale: 0.9 }}
                                                         className="p-2 sm:p-3 text-red-400 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-500/20 rounded-xl hover:text-red-300 flex-shrink-0"
                                                     >
-                                                        <Trash2 size={16} className="sm:w-5 sm:h-5" />
+                                                        <X size={16} className="sm:w-5 sm:h-5" />
                                                     </motion.button>
                                                 </div>
                                             </div>
