@@ -10,7 +10,14 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 // --- Type Definitions ---
 type Member = { id: string; name: string; };
 type ExpenseParticipant = { memberId: string; share: number; };
-type Expense = { id: string; description: string; amount: number; paidById: string; participants: ExpenseParticipant[]; };
+type ExpensePayer = { memberId: string; amount: number; };
+type Expense = { 
+    id: string; 
+    description: string; 
+    amount: number; 
+    paidBy: ExpensePayer[]; // Changed from single paidById to array of payers
+    participants: ExpenseParticipant[]; 
+};
 type Group = { id: string; name: string; members: Member[]; expenses: Expense[]; };
 
 // --- Enhanced UI Components ---
@@ -284,7 +291,7 @@ const AlertModal: React.FC<{ message: string; onClose: () => void; }> = ({ messa
             <motion.div 
                 className="relative bg-white/[0.05] backdrop-blur-2xl border border-white/[0.1] rounded-3xl p-6 max-w-sm w-full shadow-[0_20px_80px_rgba(0,0,0,0.3)]" 
                 initial={{ scale: 0.8, opacity: 0, y: 30 }} 
-                animate={{ scale: 1, opacity: 1, y: 0 }} 
+                animate={{ opacity: 1, scale: 1, y: 0 }} 
                 exit={{ scale: 0.8, opacity: 0, y: 30 }} 
                 transition={{ duration: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
             >
@@ -474,7 +481,7 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
     const [newMemberName, setNewMemberName] = useState('');
     const [expenseDescription, setExpenseDescription] = useState('');
     const [expenseAmount, setExpenseAmount] = useState<string>('');
-    const [paidById, setPaidById] = useState<string | null>(members.length > 0 ? members[0].id : null);
+    const [payers, setPayers] = useState<ExpensePayer[]>([]);
     
     // State for different split methods
     const [splitMethod, setSplitMethod] = useState<'equally' | 'amount'>('equally');
@@ -488,6 +495,10 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
     // Validation for "by amount" mode
     const totalAmountSplit = Object.values(amountParticipants).reduce((sum, current) => sum + (parseFloat(current) || 0), 0);
     const isAmountSplitValid = Math.abs(totalAmountSplit - (parseFloat(expenseAmount) || 0)) < 0.01;
+    
+    // Validation for payers
+    const totalPaid = payers.reduce((sum, payer) => sum + payer.amount, 0);
+    const isPayersValid = Math.abs(totalPaid - (parseFloat(expenseAmount) || 0)) < 0.01;
 
     // Summary State
     const [total, setTotal] = useState<number | null>(null);
@@ -497,15 +508,19 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
     const [isResetModalOpen, setIsResetModalOpen] = useState(false);
 
     useEffect(() => { 
-        if (members.length > 0 && (!paidById || !members.find(m => m.id === paidById))) { 
-            setPaidById(members[0].id); 
-        } 
         setEqualParticipantIds(members.map(m => m.id)); 
-    }, [members, paidById]);
+        // Initialize with single payer if members exist
+        if (members.length > 0 && payers.length === 0) {
+            setPayers([{ memberId: members[0].id, amount: 0 }]);
+        }
+    }, [members]);
 
     const updateMembers = (newMembers: Member[]) => { 
         const memberIds = newMembers.map(m => m.id); 
-        const updatedExpenses = group.expenses.filter(e => memberIds.includes(e.paidById) && e.participants.every(p => memberIds.includes(p.memberId))); 
+        const updatedExpenses = group.expenses.filter(e => 
+            e.paidBy.every(p => memberIds.includes(p.memberId)) && 
+            e.participants.every(p => memberIds.includes(p.memberId))
+        ); 
         onUpdateGroup({ ...group, members: newMembers, expenses: updatedExpenses }); 
     };
 
@@ -527,12 +542,41 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
     const handleDeleteMember = (idToDelete: string) => { 
         updateMembers(members.filter(m => m.id !== idToDelete)); 
     };
+
+    // Payer management functions
+    const addPayer = () => {
+        const availableMembers = members.filter(m => !payers.some(p => p.memberId === m.id));
+        if (availableMembers.length > 0) {
+            setPayers([...payers, { memberId: availableMembers[0].id, amount: 0 }]);
+        }
+    };
+
+    const removePayer = (index: number) => {
+        if (payers.length > 1) {
+            setPayers(payers.filter((_, i) => i !== index));
+        }
+    };
+
+    const updatePayer = (index: number, field: 'memberId' | 'amount', value: string | number) => {
+        const updated = [...payers];
+        if (field === 'memberId') {
+            updated[index].memberId = value as string;
+        } else {
+            updated[index].amount = parseFloat(value as string) || 0;
+        }
+        setPayers(updated);
+    };
     
     const handleAddExpense = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const numericAmount = parseFloat(expenseAmount);
-        if (!expenseDescription.trim() || numericAmount <= 0 || !paidById) {
-            showAlert('Please fill out Description, Amount, and Paid By fields.');
+        if (!expenseDescription.trim() || numericAmount <= 0) {
+            showAlert('Please fill out Description and Amount fields.');
+            return;
+        }
+
+        if (!isPayersValid || payers.length === 0) {
+            showAlert('Please ensure the total paid amount matches the expense amount.');
             return;
         }
 
@@ -555,12 +599,20 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                 return; 
             }
         }
-        const newExpense: Expense = { id: crypto.randomUUID(), description: expenseDescription.trim(), amount: numericAmount, paidById, participants };
+
+        const newExpense: Expense = { 
+            id: crypto.randomUUID(), 
+            description: expenseDescription.trim(), 
+            amount: numericAmount, 
+            paidBy: [...payers], 
+            participants 
+        };
         updateExpenses([...expenses, newExpense]);
         
         // Reset form
         setExpenseDescription('');
         setExpenseAmount('');
+        setPayers([{ memberId: members[0]?.id || '', amount: 0 }]);
         const clearedAmounts: {[key: string]: string} = {};
         members.forEach(m => { clearedAmounts[m.id] = '' });
         setAmountParticipants(clearedAmounts);
@@ -590,12 +642,18 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
         }
         const memberBalances: { [key: string]: number } = {};
         members.forEach(m => memberBalances[m.id] = 0);
+        
         expenses.forEach(expense => {
-            memberBalances[expense.paidById] += expense.amount;
+            // Add amounts paid by each payer
+            expense.paidBy.forEach(payer => {
+                memberBalances[payer.memberId] += payer.amount;
+            });
+            // Subtract amounts owed by each participant
             expense.participants.forEach(participant => {
                 memberBalances[participant.memberId] -= participant.share;
             });
         });
+        
         const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
         setTotal(totalSpent);
         const finalBalances = members.map(m => ({ id: m.id, name: m.name, balance: memberBalances[m.id] }));
@@ -739,7 +797,7 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
             <Card>
                 <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                     <div className="p-2 sm:p-3 bg-white/5 rounded-xl border border-white/10">
-                        <div className="text-white/70 text-xl sm:text-2xl font-bold">₹</div>
+                        <span className="text-white/70 text-xl sm:text-2xl font-bold">₹</span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl text-white font-medium">Add New Expense</h2>
                 </div>
@@ -759,20 +817,97 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                             <Input 
                                 type="number" 
                                 value={expenseAmount} 
-                                onChange={(e) => setExpenseAmount(e.target.value)} 
+                                onChange={(e) => {
+                                    setExpenseAmount(e.target.value);
+                                    // Auto-update single payer amount
+                                    if (payers.length === 1) {
+                                        const amount = parseFloat(e.target.value) || 0;
+                                        setPayers([{ ...payers[0], amount }]);
+                                    }
+                                }} 
                                 placeholder="₹ 0.00" 
                             />
                         </div>
                     </div>
 
+                    {/* New Multi-Payer Section */}
                     <div>
-                        <label className="text-white/80 font-medium mb-2 sm:mb-3 block text-sm sm:text-base">Paid by</label>
-                        <CustomSelect 
-                            options={members.map(m => ({ value: m.id, label: m.name, icon: <User size={16}/> }))} 
-                            value={paidById} 
-                            onChange={setPaidById} 
-                            placeholder="Select who paid" 
-                        />
+                        <label className="text-white/80 font-medium mb-3 sm:mb-4 block text-sm sm:text-base">Paid by</label>
+                        <div className="space-y-3 sm:space-y-4">
+                            <AnimatePresence>
+                                {payers.map((payer, index) => {
+                                    const member = members.find(m => m.id === payer.memberId);
+                                    const availableMembers = members.filter(m => 
+                                        m.id === payer.memberId || !payers.some(p => p.memberId === m.id)
+                                    );
+                                    
+                                    return (
+                                        <motion.div
+                                            key={`payer-${index}`}
+                                            initial={{ opacity: 0, y: -20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            transition={{ duration: 0.3 }}
+                                            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 p-4 bg-white/[0.04] border border-white/[0.08] rounded-2xl"
+                                        >
+                                            <div className="flex-grow">
+                                                <CustomSelect
+                                                    options={availableMembers.map(m => ({ 
+                                                        value: m.id, 
+                                                        label: m.name, 
+                                                        icon: <User size={16}/> 
+                                                    }))}
+                                                    value={payer.memberId}
+                                                    onChange={(memberId) => updatePayer(index, 'memberId', memberId)}
+                                                    placeholder="Select who paid"
+                                                />
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-full sm:w-32">
+                                                    <Input
+                                                        type="number"
+                                                        value={payer.amount.toString()}
+                                                        onChange={(e) => updatePayer(index, 'amount', e.target.value)}
+                                                        placeholder="₹ 0.00"
+                                                    />
+                                                </div>
+                                                {payers.length > 1 && (
+                                                    <motion.button
+                                                        onClick={() => removePayer(index)}
+                                                        whileHover={{ scale: 1.1 }}
+                                                        whileTap={{ scale: 0.9 }}
+                                                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-all duration-300"
+                                                    >
+                                                        <X size={16} />
+                                                    </motion.button>
+                                                )}
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
+                            </AnimatePresence>
+                            
+                            {members.filter(m => !payers.some(p => p.memberId === m.id)).length > 0 && (
+                                <motion.button
+                                    onClick={addPayer}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="flex items-center gap-3 p-4 text-cyan-400 hover:text-cyan-300 bg-cyan-500/5 hover:bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/30 rounded-2xl transition-all duration-300"
+                                >
+                                    <Plus size={16} />
+                                    <span className="text-sm sm:text-base">Add another payer</span>
+                                </motion.button>
+                            )}
+                            
+                            <div className={`text-center p-3 sm:p-4 rounded-xl transition-all duration-300 text-sm sm:text-base ${(parseFloat(expenseAmount) > 0 && isPayersValid) ? 'text-green-300 bg-green-500/10 border border-green-500/20' : 'text-yellow-300 bg-yellow-500/10 border border-yellow-500/20'}`}>
+                                Total paid: ₹{totalPaid.toFixed(2)} / ₹{(parseFloat(expenseAmount) || 0).toFixed(2)}
+                                {parseFloat(expenseAmount) > 0 && !isPayersValid && (
+                                    <div className="text-xs mt-1 opacity-80">
+                                        Remaining: ₹{Math.abs(totalPaid - (parseFloat(expenseAmount) || 0)).toFixed(2)}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     <div>
@@ -880,7 +1015,13 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
 
                     <Button 
                         onClick={handleAddExpense} 
-                        disabled={members.length === 0 || (splitMethod === 'amount' && !isAmountSplitValid) || parseFloat(expenseAmount) <= 0}
+                        disabled={
+                            members.length === 0 || 
+                            !isPayersValid || 
+                            payers.length === 0 ||
+                            (splitMethod === 'amount' && !isAmountSplitValid) || 
+                            parseFloat(expenseAmount) <= 0
+                        }
                     >
                         <Plus size={18} /> Add Expense
                     </Button>
@@ -907,7 +1048,11 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                         <div className="space-y-3 sm:space-y-4">
                             <AnimatePresence>
                                 {expenses.map((expense, index) => { 
-                                    const paidBy = members.find(m => m.id === expense.paidById); 
+                                    const payerNames = expense.paidBy.map(p => {
+                                        const member = members.find(m => m.id === p.memberId);
+                                        return member ? `${member.name} (₹${p.amount})` : '';
+                                    }).filter(Boolean).join(', ');
+                                    
                                     return (
                                         <motion.div 
                                             key={expense.id} 
@@ -931,9 +1076,8 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                                                         </span>
                                                         <h3 className="text-white font-medium text-lg sm:text-xl">{expense.description}</h3>
                                                     </div>
-                                                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 text-white/60 text-sm sm:text-base">
-                                                        <span>Paid by <span className="text-cyan-400 font-medium">{paidBy?.name}</span></span>
-                                                        <span className="hidden sm:inline">•</span>
+                                                    <div className="flex flex-col gap-1 text-white/60 text-sm sm:text-base">
+                                                        <span>Paid by <span className="text-cyan-400 font-medium">{payerNames}</span></span>
                                                         <span>Split between {expense.participants.length} people</span>
                                                     </div>
                                                 </div>
@@ -1005,7 +1149,10 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                         
                         <SummaryChart data={members.map(m => ({ 
                             name: m.name, 
-                            value: expenses.filter(e => e.paidById === m.id).reduce((sum, e) => sum + e.amount, 0) 
+                            value: expenses.reduce((sum, e) => {
+                                const paidAmount = e.paidBy.find(p => p.memberId === m.id)?.amount || 0;
+                                return sum + paidAmount;
+                            }, 0)
                         }))} />
 
                         <div className='text-center text-white/70 mt-6 sm:mt-8 mb-6 sm:mb-8 border-b border-white/10 pb-6 sm:pb-8'>
@@ -1102,7 +1249,8 @@ function App() {
                         id: exp.id,
                         description: exp.description,
                         amount: exp.amount,
-                        paidById: exp.paidById,
+                        // Handle backward compatibility
+                        paidBy: exp.paidBy || (exp.paidById ? [{ memberId: exp.paidById, amount: exp.amount }] : []),
                         participants: exp.participants || []
                     })) : [],
                 }));
