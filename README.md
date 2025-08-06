@@ -12,9 +12,9 @@ A sleek, feature-rich web application designed to simplify expense management fo
 
 | Desktop View | Mobile View |
 | :---: | :---: |
-| ![Desktop Groups List](PASTE_URL_FOR_Screenshot_2025-08-06_at_7.06.27_PM.jpg_HERE) | ![Mobile Group Details](PASTE_URL_FOR_IMG_20250807_002054.jpg_HERE) |
-| *The main groups page with a clean, modern layout.* | *The fully responsive group details page on a mobile device.* |
-| ![Desktop Group Details](PASTE_URL_FOR_Screenshot_2025-08-07_at_12.08.46_AM.jpg_HERE) | |
+| ![Desktop Groups List](https://github.com/user-attachments/assets/7f4809cd-b8b5-456c-8b70-955232c9075f) | ![Mobile Group Details](https://github.com/user-attachments/assets/d6fdb088-131e-41a6-b10b-8cd86a605173) |
+| *The main groups page with a clean, modern layout.* | *A fully responsive group details page on a mobile device.* |
+| ![Desktop Group Details](https://github.com/user-attachments/assets/a6c2712c-60fe-4598-b7b6-4eeff1e19371) | |
 | *The feature-rich group details page with member tags and expense forms.* | |
 
 
