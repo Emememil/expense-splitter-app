@@ -1,80 +1,106 @@
-# Expense Splitter Application
+Expense Splitter Pro
+A sleek, feature-rich web application designed to simplify expense management for groups, built with a modern React and TypeScript stack.
 
-A feature-rich, single-page application built from the ground up to simplify expense management for groups. This app provides an intuitive and elegant solution for tracking shared costs, calculating debts, and settling up, all wrapped in a premium, responsive user interface.
+🌐 Live Demo: https://emememil.github.io/expense-splitter-pro/
 
-## 🚀 Overview
+(Note: To add a screenshot, upload a high-quality image or GIF of your finished app and replace the URL above.)
 
-Welcome to my Expense Splitter App! This project showcases my ability to build a complex, interactive, and user-friendly web application using modern front-end technologies. It demonstrates a deep understanding of state management in React, component-based architecture, and creating a polished user experience with fluid animations and a clean, glassmorphism-inspired design.
+🚀 Overview
+Expense Splitter Pro is a sophisticated, single-page application built from the ground up to provide an intuitive and elegant solution for tracking shared costs. As a final semester BCA student, this project was undertaken to demonstrate a comprehensive understanding of modern front-end architecture, state management, and the creation of a polished, production-quality user experience.
 
-As a final semester BCA student, I'm passionate about building practical tools that solve real-world problems. This project was a deep dive into creating a professional-grade product, from initial concept to final deployment.
+The application features a "glassmorphism" inspired design, is fully responsive, and leverages local storage for data persistence, ensuring a seamless user session. The entire development process, including debugging complex environmental and animation bugs, showcases advanced problem-solving skills and a commitment to high-quality code.
 
-## 🌐 Live Demo
+✨ Key Features
 
-**[https://Emememil.github.io/expense-splitter-app/](https://Emememil.github.io/expense-splitter-app/)**
-
-![Expense Splitter App Screenshot](https://raw.githubusercontent.com/Emememil/expense-splitter-app/main/screenshot.jpg)
-
-*(**Note:** To add the screenshot above, please add an image named `screenshot.jpg` to your repository. A great tool for this is the "Lightshot" Chrome extension.)*
+Group Management: Create, manage, and delete multiple expense groups with fluid, animated UI updates.
 
 
-## ✨ Features
-
-* **Group Management:** Create and manage multiple expense groups (e.g., "Goa Trip," "Roommates").
-* **Member Management:** Easily add or remove members within each group.
-* **Advanced Expense Tracking:** Log expenses with descriptions and amounts.
-* **Multi-Payer System:** Allows a single bill to be paid by multiple people, each contributing a specific amount.
-* **Advanced Splitting Logic:**
-    * **Split Equally:** Divide costs evenly among selected participants.
-    * **Split by Amount:** Assign exact, uneven amounts to each participant for complex bills.
-* **Automated Calculations:** The app instantly calculates who owes whom, providing a clear summary of all balances.
-* **Simple Settlements:** Generates a clear, scannable list of transactions required to settle all debts.
-* **Data Visualization:** A dynamic pie chart provides a visual summary of expenses.
-* **Responsive Design:** A fluid and fully responsive layout for a seamless experience on all devices.
-* **Persistent State:** All data is saved to the browser's local storage.
-* **Premium UI/UX:** A sleek, "glassfrost" design with custom modals and fluid animations powered by Framer Motion.
 
 
-## 🛠️ Technologies Used
 
-* **React:** For building the user interface with a component-based architecture.
-* **Vite:** As the next-generation front-end tooling for a fast development experience.
-* **TypeScript:** For adding static typing to ensure code quality and maintainability.
-* **Tailwind CSS:** For a utility-first CSS framework to create the custom, responsive design.
-* **Framer Motion:** For creating beautiful and fluid animations and page transitions.
-* **Recharts:** For creating the dynamic and interactive summary pie chart.
-* **Lucide React:** For high-quality and consistent icons.
+Member Management: Easily add and remove members within each group, with a redesigned, compact UI for a premium feel.
 
 
-## 💡 How to Run Locally
 
-To get a copy of this project up and running on your local machine:
+Advanced Expense Tracking: Log expenses with descriptions, amounts, and a multi-payer system allowing a single bill to be paid by multiple people.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/Emememil/expense-splitter-app.git](https://github.com/Emememil/expense-splitter-app.git)
-    ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd expense-splitter-app
-    ```
-3.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-4.  **Start the development server:**
-    ```bash
-    npm run dev
-    ```
 
-## ✍️ Author
 
-**Emil William**
+Flexible Splitting Logic:
 
-* **Phone:** 9061161832
-* **Email:** emilwilliam66@gmail.com
-* **GitHub:** [github.com/Emememil](https://github.com/Emememil)
-* **LinkedIn:** [linkedin.com/in/emil-w-](https://www.linkedin.com/in/emil-w-/)
 
-## © License
+Split Equally: Divide costs evenly among any number of selected participants.
 
-This project is open-source and available under the **MIT License**.
+
+
+
+
+Split by Amount: Assign exact, uneven amounts to each participant for complex bills.
+
+
+
+Automated Calculations & Settlements: Instantly calculates who owes whom and generates a clear, scannable list of transactions required to settle all debts.
+
+
+
+
+Data Visualization: A dynamic pie chart from Recharts provides a visual summary of expenses.
+
+
+
+Persistent State: All data is saved to the browser's local storage for a seamless, stateful user experience.
+
+
+Premium UI/UX: A sleek, minimalist design with custom confirmation modals and fluid, physics-based animations powered by Framer Motion.
+
+
+
+Fully Responsive: A fluid layout that provides an optimal experience on all devices, from mobile phones to desktops.
+
+🛠️ Technologies & Skills Demonstrated
+Core: React (Hooks, State Management), TypeScript, Vite
+
+Styling: Tailwind CSS (Utility-First, Responsive Design)
+
+Animation: Framer Motion (Layout Animations, AnimatePresence, Variants)
+
+Charts & Visualization: Recharts
+
+Icons: Lucide React
+
+Version Control: Git & GitHub
+
+Deployment: GitHub Pages
+
+💡 How to Run Locally
+Clone the repository:
+
+Bash
+
+git clone https://github.com/Emememil/expense-splitter-pro.git
+Navigate to the project directory:
+
+Bash
+
+cd expense-splitter-pro
+Install dependencies:
+
+Bash
+
+npm install
+Start the development server:
+
+Bash
+
+npm run dev
+✍️ Author
+Emil William
+
+Email: emilwilliam66@gmail.com
+
+GitHub: github.com/Emememil
+
+LinkedIn: linkedin.com/in/emil-w-
+
+© License
+This project is open-source and available under the MIT License.
