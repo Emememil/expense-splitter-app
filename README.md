@@ -10,12 +10,35 @@ A sleek, feature-rich web application designed to simplify expense management fo
 
 ### Screenshots
 
-| Desktop View | Mobile View |
-| :---: | :---: |
-| ![Desktop Groups List](https://github.com/user-attachments/assets/7f4809cd-b8b5-456c-8b70-955232c9075f) | ![Mobile Group Details](https://github.com/user-attachments/assets/d6fdb088-131e-41a6-b10b-8cd86a605173) |
-| *The main groups page with a clean, modern layout.* | *A fully responsive group details page on a mobile device.* |
-| ![Desktop Group Details](https://github.com/user-attachments/assets/a6c2712c-60fe-4598-b7b6-4eeff1e19371) | |
-| *The feature-rich group details page with member tags and expense forms.* | |
+<details>
+<summary><b>📷 Desktop Gallery</b></summary>
+<br>
+
+| Groups List | Group Details | Add Expense |
+| :---: | :---: | :---: |
+| ![Desktop Groups List](https://github.com/user-attachments/assets/7f4809cd-b8b5-456c-8b70-955232c9075f) | ![Desktop Group Details](https://github.com/user-attachments/assets/d6fdb088-131e-41a6-b10b-8cd86a605173) | ![Desktop Add Expense](https://github.com/user-attachments/assets/a6c2712c-60fe-4598-b7b6-4eeff1e19371) |
+
+| Expense Log | Summary | Settlements |
+| :---: | :---: | :---: |
+| ![Desktop Expense Log](https://github.com/user-attachments/assets/de19d87f-5a2d-4d91-92ad-e6ffc3599910) | ![Desktop Summary](https://github.com/user-attachments/assets/a918a016-5cf5-47f8-8a2c-55fd1f9141d5) | ![Desktop Settlements](https://github.com/user-attachments/assets/735b1b17-c682-4fc0-a1ce-1bb8f1e50e3e) |
+
+</details>
+
+<br>
+
+<details>
+<summary><b>📱 Mobile Gallery</b></summary>
+<br>
+
+| Groups List | Group Details | Add Expense |
+| :---: | :---: | :---: |
+| ![Mobile Groups List](https://github.com/user-attachments/assets/473437fa-5c09-4f41-80a2-4fd583bea75f) | ![Mobile Group Details](https://github.com/user-attachments/assets/029423b4-1181-479d-8ef6-34607bfe1f56) | ![Mobile Add Expense](https://github.com/user-attachments/assets/7c9c212a-0e33-450a-a6d6-9a515427e2ae) |
+
+| Expense Log | Summary | Settlements |
+| :---: | :---: | :---: |
+| ![Mobile Expense Log](https://github.com/user-attachments/assets/fa132e69-72ab-442d-bfdb-06df95e3b2a5) | ![Mobile Summary](https://github.com/user-attachments/assets/f7c74d7a-8bc5-46bd-a18b-d2b34fbda6ea) | ![Mobile Settlements](https://github.com/user-attachments/assets/4abe46a8-307f-459a-b564-eb653d1d215e) |
+
+</details>
 
 
 ## 🚀 Overview
