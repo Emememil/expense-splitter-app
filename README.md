@@ -1,10 +1,10 @@
-# Expense Splitter Pro
+# Expense Splitter pro
 
 A sleek, feature-rich web application designed to simplify expense management for groups, built with a modern React and TypeScript stack.
 
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://reactjs.org/) [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite)](https://vitejs.dev/) [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)](https://www.typescriptlang.org/) [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 
-🌐 **Live Demo:** [**https://emememil.github.io/expense-splitter-pro/**](https://emememil.github.io/expense-splitter-pro/)
+🌐 **Live Demo:** [**https://emememil.github.io/expense-splitter-pro/**](https://emememil.github.io/expense-splitter-app/)
 
 ---
 
