@@ -37,7 +37,7 @@ const Input = ({ value, onChange, placeholder, type = "text", readOnly = false }
         readOnly={readOnly}
         whileFocus={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className={`w-full px-3 sm:px-6 py-3 sm:py-5 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl text-white placeholder-slate-400/70 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 focus:bg-white/[0.06] transition-all duration-500 ease-out text-overflow-ellipsis overflow-hidden text-sm sm:text-base ${readOnly ? 'bg-white/[0.02] opacity-70' : 'hover:bg-white/[0.06] hover:border-white/[0.12]'}`}
+        className={`w-full px-3 sm:px-6 py-3 sm:py-5 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl text-white placeholder-slate-400/70 focus:outline-none focus:border-white/40 focus:bg-white/[0.06] transition-all duration-500 ease-out text-overflow-ellipsis overflow-hidden text-sm sm:text-base ${readOnly ? 'bg-white/[0.02] opacity-70' : 'hover:bg-white/[0.06] hover:border-white/[0.12]'}`}
         style={{
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap'
@@ -103,7 +103,7 @@ const CustomSelect: React.FC<{ options: { value: string; label: string; icon?: R
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="w-full px-3 sm:px-6 py-3 sm:py-5 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-500 text-left flex items-center justify-between hover:bg-white/[0.06] hover:border-white/[0.12] overflow-hidden text-sm sm:text-base"
+                className="w-full px-3 sm:px-6 py-3 sm:py-5 bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl text-white focus:outline-none focus:border-white/40 transition-all duration-500 text-left flex items-center justify-between hover:bg-white/[0.06] hover:border-white/[0.12] overflow-hidden text-sm sm:text-base"
             >
                 <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                     {selectedOption?.icon}
@@ -823,7 +823,6 @@ const GroupDetailsPage: React.FC<{ group: Group; onUpdateGroup: (group: Group) =
                     </AnimatePresence>
                 </motion.div>
                 {/* --- END: STRUCTURAL FIX FOR MEMBER LIST ANIMATION --- */}
-
             </Card>
 
             <Card>
