@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Surgical focus fix - removes blurry outer glow globally */
+*:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+input:focus,
+button:focus,
+select:focus,
+textarea:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Ensure Tailwind focus ring utilities are completely disabled */
+.focus\:ring-2:focus,
+.focus\:ring-white\/20:focus,
+.focus\:ring-1:focus,
+.focus\:ring:focus {
+  box-shadow: none !important;
+}
